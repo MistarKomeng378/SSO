@@ -1,0 +1,10 @@
+<?php
+ob_start();
+include"config/koneksi.php";
+include"config/fungsi_bulan.php";
+include"config/fungsi_indotgl.php";
+include"config/fungsi_rupiah.php";
+include"config/fungsi_name.php";
+include"config/fungsi_anti_injection.php";
+include"config/encript.php";
+?>

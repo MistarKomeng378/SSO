@@ -1,0 +1,23 @@
+<?php
+echo $_GET['id'];
+?>
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes
+tes

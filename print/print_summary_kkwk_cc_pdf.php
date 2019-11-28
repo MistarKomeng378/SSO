@@ -1,0 +1,240 @@
+<?php
+ob_start();
+session_start();
+set_time_limit(0);
+	include "../config/koneksi.php";
+    include "../tcpdf/fungsi_indotgl.php";
+    include "../config/fungsi_rupiah.php";
+    include "../config/fungsi_bulan.php";
+    include "../config/fungsi_name.php";
+    include "../config/encript.php";
+    include "../config/fungsi_timeline.php";
+	
+	$ex		= explode("-",$_GET['id']);
+	$bulan	= mysql_real_escape_string(dc($ex[0]));
+	$tahun	= mysql_real_escape_string(dc($ex[1]));
+	$cc		= mysql_real_escape_string(dc($_GET['cc']));
+	// @$nik	= mysql_real_escape_string(dc($_GET['nik']));
+	// @$lastDay 	= cal_days_in_month(CAL_GREGORIAN,$bulan,$tahun);
+	// @$w = 63/$lastDay;
+	
+	timeline($_SESSION['nik'],"download","Telah melakukan download Summary KKWK Per Cost Center $cc Bulan ".bulan($bulan)." Tahun $tahun");
+	
+	if(empty($bulan)){
+		$isi ='<h2>Tidak dapat menampilkan data';
+	}else{
+	
+	$isi	='
+	<table width="100%" border="0">
+			<tr>
+				<td colspan="3"><img src="logo_KIT.png" width="200px" height=""></td>
+			</tr>
+			<tr>
+				<td width="30%"></td>
+				<td width="40%" align="center">
+					<b>
+						<font size="13">SUMMARY KKWK Per COST CENTER</font><br>
+						PERIODE :  '.bulan($bulan).' '.$tahun.'
+					</b>
+				</td>
+				<td width="30%"></td>
+			</tr>
+		</table>
+		<br>
+		<table width="100%" border="1" cellpadding="2">
+				<thead>
+					<tr align="center">
+						<th width="3%">No</th>
+						<th width="7%">NIK</th>
+						<th width="20%">Nama</th>
+						<th width="11%">Cost Center</th>
+						<th width="37%">Uraian</th>
+						<th  width="12%">Total Waktu (Jam)</th>
+						<th  width="10%">Presentase (%)</th>
+					</tr>
+				</thead>
+				<tbody>';
+						if(!empty($_GET['cc'])){
+							// $cc="AND (m_karyawan.dept='$cc' OR pencapaian.cc='$cc') ";
+							$cc="AND pencapaian.cc='$cc' ";
+						}
+						$query = mysql_query("SELECT DISTINCT	pencapaian.nik,
+																pencapaian.cc,
+																m_karyawan.`name`,
+																mskko.uraian
+																FROM
+																pencapaian
+																INNER JOIN m_karyawan ON m_karyawan.regno = pencapaian.nik
+																INNER JOIN mskko ON mskko.CostCenter = pencapaian.cc
+																WHERE pencapaian.nik!='' AND pencapaian.cc!='' $cc
+																AND DATE_FORMAT(tgl_aktifitas,'%c %Y')='$bulan $tahun'
+																ORDER BY pencapaian.nik
+																");
+																
+						$no =1;
+						while($r=mysql_fetch_array($query)){
+							$jml_jam 	= mysql_query("SELECT total_jam,total_menit FROM pencapaian WHERE cc='$r[cc]' AND nik='$r[nik]' AND date_format( tgl_aktifitas, '%c %Y' ) = '$bulan $tahun'");
+							while($jj=mysql_fetch_array($jml_jam)){
+								if($jj['total_menit']>=30){
+									$sisa_jam = 1;
+								}else{
+									$sisa_jam = 0;
+								}
+								@$jum_jam	+= $jj['total_jam']+$sisa_jam;
+							}
+							
+							$jam_bulan 	= mysql_query("SELECT total_jam,total_menit FROM pencapaian WHERE nik='$r[nik]' AND date_format( tgl_aktifitas, '%c %Y' ) = '$bulan $tahun'");
+							while($jb=mysql_fetch_array($jam_bulan)){
+								if($jb['total_menit']>=30){
+									$sisa_jam = 1;
+								}else{
+									$sisa_jam = 0;
+								}
+								@$jum_jam_bulan	+= $jb['total_jam']+$sisa_jam;
+							}
+							
+							
+							if($jum_jam_bulan==0){
+								$prosen		= 0;
+							}else{
+								$prosen			= ($jum_jam/$jum_jam_bulan)*100;
+							}
+							$isi .='
+								<tr>
+									<td width="3%" align="center">'.$no.'</td>
+									<td width="7%" align="center">'.$r['nik'].'</td>
+									<td width="20%">'.name($r['nik']).'</td>
+									<td width="11%" align="center">'.$r['cc'].'</td>
+									<td width="37%">'.$r['uraian'].'</td>
+									<td width="12%" align="center">'.$jum_jam.'</td>
+									<td width="10%" align="center">'.desimal2($prosen).'</td>
+								</tr>
+							';
+						$no++;
+						$jum_jam = 0;
+						$jum_jam_bulan = 0;
+						}
+		$isi .='</tbody>
+					</table>';
+	}
+//=======blok untuk nampilin ke PDF======/
+require_once('../tcpdf/config/lang/eng.php');
+require_once('../tcpdf/tcpdf.php');
+
+// Extend the TCPDF class to create custom Header and Footer
+class MYPDF extends TCPDF {
+
+    //Page header
+    public function Header() {
+		// Logo
+        // $image_file = K_PATH_IMAGES.'logo.png';
+        // $this->Image($image_file, 20, 20, 45, '', 'png', '', 'T', false, 280, '', false, false, 0, false, false, false);
+        // Set font
+        // $this->SetFont('helvetica', 'B', 20);
+        // Title
+       // $this->Cell(0, 15, '', 0, false, 'C', 0, '', 0, false, 'M', 'M');
+	   
+	   global $header1,$header2;
+	   $this->SetFont('helvetica','B',9);
+	   $this->writeHTML(($this->getPage()==2?$header1:''), true, false, true, false, '');
+	   $this->SetFont('helvetica','B',9);
+	   $this->writeHTML($header2, true, false, true, false, '');
+	}
+
+    // Page footer
+    public function Footer() {
+        // Position at 15 mm from bottom
+        $this->SetY(-5);
+        // Set font
+        // $this->SetFont('helvetica', 'I', 5);
+        // Page number
+        // $this->Cell(0, 10, ''.$this->getAliasNumPage().'/'.$this->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
+							}
+						}
+
+// create new PDF document
+$pdf = new MYPDF('L', PDF_UNIT, 'A4', true, 'UTF-8', false);
+
+// set document information
+$pdf->SetCreator(PDF_CREATOR);
+$pdf->SetAuthor('');
+$pdf->SetTitle('');
+$pdf->SetSubject('TCPDF');
+$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
+
+// set default header data
+$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
+
+// set header and footer fonts
+$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
+// set default monospaced font
+$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+// set margins
+// $pdf->SetMargins(PDF_MARGIN_RIGHT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+$pdf->SetMargins(PDF_MARGIN_RIGHT, 12, PDF_MARGIN_RIGHT);
+// $pdf->SetMargins(5, PDF_MARGIN_TOP, 5);
+$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
+$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
+
+// $pdf->SetLeftMargin(14);
+// $pdf->SetTopMargin(9);
+// $pdf->SetFont($fontname, '', '9');
+// $pdf->setPrintHeader(false);
+// $pdf->SetFooterMargin(0);
+// $pdf->setPrintFooter(false)
+
+
+//set auto page breaks
+// $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
+
+$pdf->SetAutoPageBreak(TRUE, 12);
+
+//set image scale factor
+$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+//set some language-dependent strings
+$pdf->setLanguageArray($l);
+
+// --------------------Blok Text-------------------------------//
+// set font
+$pdf->SetFont('helvetica', '', 9);
+
+
+    // courier : Courier
+    // courierb : Courier Bold
+    // courierbi : Courier Bold Italic
+    // courieri : Courier Italic
+    // helvetica : Helvetica
+    // helveticab : Helvetica Bold
+    // helveticabi : Helvetica Bold Italic
+    // helveticai : Helvetica Italic
+    // symbol : Symbol
+    // times : Times New Roman
+    // timesb : Times New Roman Bold
+    // timesbi : Times New Roman Bold Italic
+    // timesi : Times New Roman Italic
+    // zapfdingbats : Zapf Dingbats
+
+//============================block kode meminta scrip php hasil===========================================/
+// add a page 1
+$pdf->AddPage();
+$pdf->writeHTML($isi, true, false, true, false, '');
+// add a page 1
+// $pdf->AddPage();
+// $pdf->writeHTML($isi2, true, false, true, false, '');
+
+// reset pointer to the last page
+$pdf->lastPage();
+
+// ---------------------------------------------------------
+
+//Close and output PDF document
+$pdf->Output('Summary KKWK bulan '.bulan($bulan).'.pdf', 'I');
+
+//============================================================+
+// END OF FILE                                                
+//============================================================+
+?>

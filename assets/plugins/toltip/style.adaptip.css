@@ -1,0 +1,124 @@
+/*
+style.adaptip.css
+https://github.com/bertanyaman/AdapTip
+Author Bertan Yaman (http://bertanyaman.com/)
+*/
+
+/* Core */
+.tp-tooltip-elem {
+  position: relative;
+}
+
+.tp-tooltip {
+  position: absolute;
+  z-index: 99999;
+  width: 600px;
+  visibility: hidden;
+  opacity: 0;
+  height: 100px;
+  -webkit-transition: opacity 300ms ease, visibility 300ms ease;
+  transition: opacity 300ms ease, visibility 300ms ease;
+  /* Positions */
+}
+.tp-tooltip * {
+  box-sizing: border-box;
+}
+.tp-tooltip.in {
+  visibility: visible;
+  opacity: 1;
+}
+.tp-tooltip .tp-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.tp-tooltip .tp-container .tp-arrow {
+  position: absolute;
+  z-index: 1;
+  width: 0;
+  height: 0;
+  border-style: solid;
+}
+.tp-tooltip .tp-container .tp-content {
+  background: #fff;
+  box-shadow: 0 2px 3px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+  padding: 15px;
+  margin: 12px;
+}
+.tp-tooltip .tp-container .tp-content h6 {
+  font-size: 12px;
+  color: #333;
+  margin: 0 0 15px 0;
+  font-family: sans-serif;
+}
+.tp-tooltip .tp-container .tp-content p {
+  font-size: 12px;
+  color: #777;
+  margin: 0;
+  font-family: sans-serif;
+}
+.tp-tooltip.top.left .tp-arrow {
+  top: 0;
+  left: 30px;
+  border-width: 0 7px 12px 7px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.3) transparent;
+}
+.tp-tooltip.top.center .tp-arrow {
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  border-width: 0 7px 12px 7px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.3) transparent;
+}
+.tp-tooltip.top.right .tp-arrow {
+  top: 0;
+  right: 30px;
+  border-width: 0 7px 12px 7px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.3) transparent;
+}
+.tp-tooltip.middle.left .tp-arrow {
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-7px);
+  transform: translateY(-7px);
+  border-width: 7px 12px 7px 0;
+  border-color: transparent rgba(0, 0, 0, 0.3) transparent transparent;
+}
+.tp-tooltip.middle.center .tp-arrow {
+  top: 0;
+  left: 50%;
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  border-width: 0 7px 12px 7px;
+  border-color: transparent transparent rgba(0, 0, 0, 0.3) transparent;
+}
+.tp-tooltip.middle.right .tp-arrow {
+  top: 50%;
+  right: 0;
+  -webkit-transform: translateY(-7px);
+  transform: translateY(-7px);
+  border-width: 7px 0 7px 12px;
+  border-color: transparent transparent transparent rgba(0, 0, 0, 0.3);
+}
+.tp-tooltip.bottom.left .tp-arrow {
+  bottom: 0;
+  left: 30px;
+  border-width: 12px 7px 0 7px;
+  border-color: rgba(0, 0, 0, 0.3) transparent transparent transparent;
+}
+.tp-tooltip.bottom.center .tp-arrow {
+  bottom: 0;
+  left: 50%;
+  -webkit-transform: translateX(-7px);
+  transform: translateX(-7px);
+  border-width: 12px 7px 0 7px;
+  border-color: rgba(0, 0, 0, 0.3) transparent transparent transparent;
+}
+.tp-tooltip.bottom.right .tp-arrow {
+  bottom: 0;
+  right: 30px;
+  border-width: 12px 7px 0 7px;
+  border-color: rgba(0, 0, 0, 0.3) transparent transparent transparent;
+}

@@ -1,0 +1,9 @@
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('10006', 'Rudi Hendri', 'D.2.3.15.25.03', 'KD', 'Rudi.hendri@krakatau-it.co.id', '0');
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('10007', 'Syamsul Maarif', 'D.2.3.15.27.18', 'KD', 'Syamsul@krakatau-it.co.id', '0');
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('10008', 'Lucky Santana Yusuf', 'D.2.3.15.23.06', 'KD', 'lucky.Santana@krakatau-it.co.id', '0');
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('10009', 'Wahyudin Nor Achmad', 'D.2.5.21.18.50', 'KJ', 'wahyudin.achmad@krakatau-it.co.id', '0');
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('10010', 'Heruno Utomo', 'D.2.5.21.18.50', 'KJ', 'wolu.88@gmail.com', '0');
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('10011', 'Noory Eka Muliantri', 'D.2.2.12.16.15', 'KB', 'Noory.muliantri@krakatau-it.co.id', '0');
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('10012', 'Fahru Ramdan', 'D.2.5.21.18.50', 'KJ', 'fahru.ramdan@krakatau-it.co.id', '0');
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('10013', 'Robi Fahmi', 'D.2.5.21.18.48', 'KJ', 'robi.fahmi@krakatau-it.co.id', '0');
+INSERT INTO `db_kinerja`.`m_karyawan` (`regno`, `name`, `poscode`, `dept`, `email`, `status`) VALUES ('90535', 'Titi Sulfiyati', 'D.2.3.16.20.38', 'KD', 'titi.sulfiyati@krakatau-it.co.id', '0');
