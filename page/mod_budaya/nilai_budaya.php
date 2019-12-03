@@ -40,7 +40,7 @@ $getUnit	= dc($_GET['unit']);
 			<?php
 			if(isset($_REQUEST['delete'])){
 				$getId	= dc($_GET['delete']);
-				mysql_query("DELETE FROM penilaian_kerja WHERE id_penilaian='$getId'");
+				//mysql_query("DELETE FROM penilaian_kerja WHERE id_penilaian='$getId'");
 				echo"<div class='alert alert-danger alert-dismissable'>
                         <i class='fa fa-check'></i>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
@@ -77,7 +77,7 @@ $getUnit	= dc($_GET['unit']);
 		if($getInsert==1){
 			echo"
 			<div class='col-lg-4'>					
-				<form method='POST' action='page/mod_penilaian/aksi_tahun_skk.php'>
+				<form method='POST' action='page/mod_budaya/aksi_tahun.php'>
 					<div class='col-lg-9'>
 						<select name='tahun' class='form-control'>
 							<option value=''>-Pilih Tahun-</option>";
@@ -124,7 +124,7 @@ $getUnit	= dc($_GET['unit']);
 		else{
 			echo"
 				<div class='col-lg-4'>					
-				<form method='POST' action='page/mod_penilaian/aksi_tahun_skk.php'>
+				<form method='POST' action='page/mod_budaya/aksi_tahun.php'>
 					<div class='col-lg-6'>
 						<select name='tahun' class='form-control'>
 							<option value=''>-Pilih Tahun-</option>";
@@ -221,17 +221,13 @@ $getUnit	= dc($_GET['unit']);
 									<td>$divisi</td>
 									<td align='center' width='30' >";
 									//=====================
-									if($getEdit==1){
-										if($skk['target']==''){
-											echo"<span title='Belum Input SKK' class='btn-xs btn-danger btn-flat'><i class='fa fa-minus'></i></span> ";
-										}else{
-											echo"<a href='?page=form_nilai_budaya&opt=edit&nik=".ec($r['nik'])."&tahun=".ec($getTahun)."&CostCenter=".ec($div)."' class='btn btn-xs btn-primary' title='Input Pencapaian'><i class='fa fa-pencil'></i></a> ";
-										}
+									if($getEdit==1){										
+											echo"<a href='?page=fn_budaya&opt=edit&nik=".ec($r['nik'])."&tahun=".ec($getTahun)."&CostCenter=".ec($div)."' class='btn btn-xs btn-primary' title='Input Budaya'><i class='fa fa-pencil'></i></a> ";										
 									echo"
 									</td> 
 									<td align='center' width='30'>";										
 										if($sumhasil['jum_hasil']==0){
-											echo"<span title='Pencapaian Belum Diinput' class='btn-xs btn-danger btn-flat' ><i class='fa fa-times'></i></span>";	
+											echo"<span title='Budaya Belum diinput' class='btn-xs btn-danger btn-flat' ><i class='fa fa-times'></i></span>";	
 										}else{
 											echo"
 											<div class='stats-link'>
@@ -259,7 +255,7 @@ $getUnit	= dc($_GET['unit']);
             $(document).on('click','.show-mskk',function(e){
                 e.preventDefault();
                 $("#myModal").modal('show');
-                $.post('page/mod_penilaian/report_skk_detile.php',
+                $.post('page/mod_budaya/detile_budaya.php',
                     {id:$(this).attr('data-id')},
                     function(html){
                         $(".modal-body").html(html);
@@ -273,7 +269,7 @@ $getUnit	= dc($_GET['unit']);
 		<div class="modal-content-full">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-				<h4 class="modal-title" align="center"><b>REPORT <br>PENILAIAN SASARAN KERJA KARYAWAN</b></h4>
+				<h4 class="modal-title" align="center"><b>REPORT <br>PENILAIAN BUDAYA KARYAWAN</b></h4>
 				
 				<h5 align="center"><b> Periode: Januari - Desember  Tahun <?=$getTahun; ?></b> </h5>
 			</div>

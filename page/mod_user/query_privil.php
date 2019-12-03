@@ -2,6 +2,7 @@
 include"../../config/koneksi.php";
 include"../../config/encript.php";
 
+	set_time_limit(3600); 
 	$nik = mysql_real_escape_string($_POST['nik']);
 	$level = mysql_real_escape_string($_POST['level']);
 

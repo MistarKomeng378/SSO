@@ -1,16 +1,6 @@
 <?php
-// $getBulan	= mysql_real_escape_string($_POST['bulan']);
-// $getTahun	= mysql_real_escape_string($_POST['tahun']) ;
-// if(isset($_POST['tahun'])){
-	// $thn = $getTahun;
-// }else{
-	// $thn = date("Y");
-// }
 
-	$thn = mysql_fetch_array(mysql_query("SELECT * FROM tahun where status='1'"));
-	// $ay  = date('Y');
-	// $Thnow = date('Y', strtotime('-1 year', strtotime($ay)));
-	// $thn = mysql_fetch_array(mysql_query("SELECT * FROM tahun where tahun='".$Thnow."'"));
+	$thn = mysql_fetch_array(mysql_query("SELECT * FROM tahun where status='1'"));	
 	if($_COOKIE['tahun_srko']==""){
 		$getTahun 		= $thn['tahun'];
 		$idtahun_srko 	= $thn['id_tahun'];
@@ -19,16 +9,15 @@
 		$idtahun_srko	= $_COOKIE['idtahun_srko'];
 	}
 
-	// $getTahun	= dc($_GET['tahun']);
 	
 $unit = mysql_fetch_array(mysql_query("SELECT * FROM mskko WHERE CostCenter='".mysql_real_escape_string(dc($_GET['unit']))."'"));
 $getUnit	= dc($_GET['CostCenter']);
 
 if($_GET['opt']=="tambah"){
-			$cek		= mysql_query("SELECT max(id_penilaian) as id FROM penilaian_kerja ");
+			$cek		= mysql_query("SELECT max(id) as id FROM nilai_budaya ");
 			$qkd 		= mysql_fetch_array($cek);
-			@$kd		= $qkd['id'];
-			$kd_baru	= (int)$kd + 1;
+			// @$kd		= $qkd['id'];
+			// $kd_baru	= (int)$kd + 1;
 			$tahun		= date("Y");
 			$bobot		= 0;
 			
@@ -36,20 +25,17 @@ if($_GET['opt']=="tambah"){
 		}elseif($_GET['opt']=="edit"){
 			$getnik			= dc($_GET['nik']);
 			$nik_kar		= mysql_real_escape_string($getnik);
-			$edit			= mysql_fetch_array(mysql_query("SELECT * FROM penilaian_kerja WHERE nik='$nik_kar'")); 
+			$edit			= mysql_fetch_array(mysql_query("SELECT * FROM nilai_buaya WHERE nik='$nik_kar'")); 
 			$kd_baru		= $id;
-			$kd2			= $edit['id_penilaian'];
+			$kd2			= $edit['id'];
 			$jabatan		= $edit['jabatan'];
 			$pm				= $edit['pm'];
 			$divisi			= $edit['divisi'];
 			$getCc			= dc($_GET['CostCenter']);
-			// $getCc			= $_GET['CostCenter'];
-			$rencana_kerja	= $edit['rencana_kerja'];
-			$target			= $edit['target'];
-			$pencapaian		= $edit['pencapaian'];
 			$bobot			= $edit['bobot'];
+			$budaya			= $edit['budaya'];
+			$nilai			= $edit['nilai'];
 			$tahun			= $edit['tahun'];
-			$satuan			= $edit['satuan'];
 			
 			if($_SESSION['level']==4){
 				$divisi_k = $getCc;
@@ -77,7 +63,7 @@ if($_GET['opt']=="tambah"){
 			<?php
 			if(isset($_REQUEST['delete'])){
 				$getId	= dc($_GET['delete']);
-				mysql_query("DELETE FROM penilaian_kerja WHERE id_penilaian='$getId'");
+				mysql_query("DELETE FROM nilai_budaya WHERE id='$getId'");
 				echo"<div class='alert alert-danger alert-dismissable'>
                         <i class='fa fa-check'></i>
                         <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;</button>
@@ -146,94 +132,41 @@ if($_GET['opt']=="tambah"){
 		
 		<table class="table table-bordered table-striped table-hover">
 				<thead>
-					<th>No.</th>
+					
+					<th width="10%">No.</th>
 					<th colspan='2'>Perilaku</th>
 					<th>Bobot</th>
-					<th>Nilai</th>
+					<th width="15%">Nilai</th>
 				</thead>
 				<tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><i>Integrity</i></td>
-                        <td>Disiplin</td>
-                        <td align="center" >2,5</td>
-                        <td>
-                            <input type="text" name="nilai" size="8">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><i>Integrity</i></td>
-                        <td>Loyalitas</td>
-                        <td align="center" >2,5</td>
-                        <td>
-                            <input type="text" name="nilai" size="8">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td><i>Fast</i></td>
-                        <td>Kecepatan Dalam Menyelesaikan Tugas</td>
-                        <td align="center" >2,5</td>
-                        <td>Nilai</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td><i>Fast</i></td>
-                        <td>Kecepatan Dalam Mengatasi Masalah</td>
-                        <td align="center" >2,5</td>
-                        <td>Nilai</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td><i>Adaptive</i></td>
-                        <td>Kemampuan Dalam Beradaptasi</td>
-                        <td align="center" >2,5</td>
-                        <td>Nilai</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td><i>Smart</i></td>
-                        <td>Kemampuan Dalam Merencanakan</td>
-                        <td align="center" >2,5</td>
-                        <td>Nilai</td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td><i>Smart</i></td>
-                        <td>Kemampuan Dalam Berinovasi</td>
-                        <td align="center" >2,5</td>
-                        <td>Nilai</td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td><i>Smart</i></td>
-                        <td>Kemampuan Dalam Menyampaikan Ide</td>
-                        <td align="center" >2,5</td>
-                        <td>Nilai</td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td><i>Teamwork</i></td>
-                        <td>Kerjasama</td>
-                        <td align="center" >2,5</td>
-                        <td>Nilai</td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td><i>Teamwork</i></td>
-                        <td>Komunikasi Efektif</td>
-                        <td align="center" >2,5</td>
-                        <td>Nilai</td>
-                    </tr>
+				<?php
+					$query  = mysql_query("SELECT * FROM budaya");
+					$no 	= 1;
+					while($bd = mysql_fetch_array($query)){
+						$query = mysql_query("SELECT pm FROM penilaian_kerja where nik='".$getnik."' AND tahun='".$getTahun."'");
 
-					
+						echo"
+							
+							<tr> 
+								<td align='center'>$no</td>
+								<td><i>$bd[prilaku]</i></td>
+								<td>$bd[ket]</td>
+								<td align='center'>2.5</td>
+								<td>
+									<input type='text' size='10' name='nilai[]'>
+								</td>
+							</tr>
+						";
+						$no++;
+					}
+
+				?>
 				</tbody>
 				
 			</table>
 			<div class="form-group  col-lg-12" align="right">
 				<button type="submit" name="simpan" value="simpan" class="btn btn-primary">Submit</button>
-				<button type="reset" class="btn btn-danger">Reset</button>
+				<!-- <button type="reset" class="btn btn-danger">Reset</button> -->
 			</div>
 		</form>
 		</div>
