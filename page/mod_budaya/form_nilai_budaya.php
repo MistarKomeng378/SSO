@@ -36,6 +36,7 @@ if($_GET['opt']=="tambah"){
 			$budaya			= $edit['budaya'];
 			$nilai			= $edit['nilai'];
 			$tahun			= $edit['tahun'];
+
 			
 			if($_SESSION['level']==4){
 				$divisi_k = $getCc;
@@ -109,7 +110,7 @@ if($_GET['opt']=="tambah"){
 			</tr>
 		</table>
 		<br>
-		<form method="POST" action="page/mod_penilaian/aksi_penilaian_skk.php?"  id="formku">
+		<form method="POST" action="page/mod_budaya/aksi_nilaibudaya.php"  id="formku">
 		<table width="50%">
 			<tr> 
 				<td height="20">NIK/Nama</td>
@@ -143,17 +144,24 @@ if($_GET['opt']=="tambah"){
 					$query  = mysql_query("SELECT * FROM budaya");
 					$no 	= 1;
 					while($bd = mysql_fetch_array($query)){
-						$query = mysql_query("SELECT pm FROM penilaian_kerja where nik='".$getnik."' AND tahun='".$getTahun."'");
+						$pm = mysql_fetch_array(mysql_query("SELECT pm,jabatan,divisi FROM penilaian_kerja where nik='".$getnik."' AND tahun='".$getTahun."'"));
+						$point = mysql_fetch_array(mysql_query("SELECT nilai FROM nilai_budaya where nik='".$getnik."' AND tahun='".$getTahun."'"));
 
-						echo"
+						echo"							
+							
+							<input type='hidden' name='nik[]' value='$getnik' size='5'>
+							<input type='hidden' name='pm[]' value='".$pm['pm']."'>
+							<input type='hidden' name='tahun[]' value='".$getTahun."'>
+							<input type='hidden' name='jabatan[]' value='".$pm['jabatan']."'>
+							<input type='hidden' name='divisi[]' value='".$pm['divisi']."'>
 							
 							<tr> 
 								<td align='center'>$no</td>
 								<td><i>$bd[prilaku]</i></td>
-								<td>$bd[ket]</td>
+								<td>$bd[ket] <input type='hidden' size='5' name='id_budaya[]' value='$bd[id]'> </td>
 								<td align='center'>2.5</td>
 								<td>
-									<input type='text' size='10' name='nilai[]'>
+									<input type='text' size='10' name='nilai[]' value='$point[nilai]'>
 								</td>
 							</tr>
 						";

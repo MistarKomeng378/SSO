@@ -121,7 +121,7 @@ if($_GET['opt']=="tambah"){
 			</tr>
 		</table>
 		<br>
-		<form method="POST" action="page/mod_penilaian/aksi_penilaian_skk.php?"  id="formku">
+		<form method="POST" action="page/mod_penilaian/aksi_penilaian_skk.php"  id="formku">
 		<table width="50%">
 			<tr> 
 				<td height="20">NIK/Nama</td>
