@@ -47,9 +47,9 @@ if($_GET['opt']=="tambah"){
 								<textarea name="ket" class="form-control" required id="ket"><?=$ket?></textarea>
 						</div>
 						<div class="col-lg-12">
-								<label for="aktifitas">Nilai</label>
-								<input type="text"name="nilai" class="form-control" value="2.5" required id="nilai">
-								<small>default Nilai diisikan dengan angka 2.5</small>
+								<label for="aktifitas">Bobot</label>
+								<input type="text"name="nilai" class="form-control" value="<?=$nilai?>" required id="nilai">
+								<!-- <small>default Nilai diisikan dengan angka 2.5</small> -->
 						</div>
 					</div>
 					<hr/>

@@ -24,14 +24,14 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 			    <div class="panel-body">
 	
 					<?php
-						$query = mysql_query("SELECT * FROM nilai_budaya");						
-						
+						$query = mysql_query("SELECT * FROM nilai_budaya WHERE nik='$getNik' AND tahun='$getThnNow'");						
+						$tnbud2		= 0;
 						while($r2=mysql_fetch_array($query)){
-							$dbud2 		= mysql_fetch_array(mysql_query("SELECT * FROM budaya WHERE id='$r2[id_budaya]'"));
+							$dbud2 			= mysql_fetch_array(mysql_query("SELECT * FROM budaya WHERE id='$r2[id_budaya]'"));
 							$jnbud2 		= $dbud2['nilai'] * $r2['nilai'];
-							$tnbud2[] 	= $jnbud2;							
+							$tnbud2 		+= $jnbud2;						
 						}						
-						$total2	 	= array_sum($tnbud2);
+						$total2	 			=$tnbud2;
 					?>	
 	
 		
@@ -78,12 +78,13 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 				</thead>
 				<tbody>
 					<?php
-						$query = mysql_query("SELECT * FROM nilai_budaya");						
+						$query = mysql_query("SELECT * FROM nilai_budaya WHERE nik='$getNik' AND tahun='$getThnNow'");						
 						$i=1;
+						$tnbud		= 0;
 						while($r=mysql_fetch_array($query)){
 							$dbud 		= mysql_fetch_array(mysql_query("SELECT * FROM budaya WHERE id='$r[id_budaya]'"));
 							$jnbud 		= $dbud['nilai'] * $r['nilai'];
-							$tnbud[] 	= $jnbud;
+							$tnbud 		+= $jnbud;
 							echo"
 								<tr>
 									<td align='center'>$i</td>
@@ -97,13 +98,13 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 							";
 							$i++;
 						}						
-						$total	 	= array_sum($tnbud);	
+						$total	 	= $tnbud;	
 					?>	
 								<tr>
 									<td colspan="2" align="right"><b>TOTAL</b></td>
 									<td align="center">&nbsp;</td>
 									<td align="center" colspan="2"><b></b></td>
-									<td align="center"><?=$total?></td>
+									<td align="center"><b><?=desimal_float($total)?></b></td>
 								</tr>	
 				</tbody>
 			</table>

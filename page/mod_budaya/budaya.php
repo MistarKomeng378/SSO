@@ -75,7 +75,7 @@
 					<th width="5%">No.</th>
 					<th>Prilaku</th>
 					<th>Keterangan</th>
-					<th>Nilai</th>
+					<th>Bobot</th>
 					<th width="10%"></th>
 				</thead>
 				<tbody>
