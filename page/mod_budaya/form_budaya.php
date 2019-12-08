@@ -17,6 +17,7 @@ if($_GET['opt']=="tambah"){
 	$id_baru		= $edit['id'];
 	$prilaku		= $edit['prilaku'];
 	$ket	        = $edit['ket'];
+	$nilai			= $edit['nilai'];
     
 }
 ?>
@@ -44,6 +45,11 @@ if($_GET['opt']=="tambah"){
 						<div class="col-lg-12">
 								<label for="aktifitas">Keterangan</label>
 								<textarea name="ket" class="form-control" required id="ket"><?=$ket?></textarea>
+						</div>
+						<div class="col-lg-12">
+								<label for="aktifitas">Nilai</label>
+								<input type="text"name="nilai" class="form-control" value="2.5" required id="nilai">
+								<small>default Nilai diisikan dengan angka 2.5</small>
 						</div>
 					</div>
 					<hr/>

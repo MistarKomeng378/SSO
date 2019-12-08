@@ -117,6 +117,7 @@ if($_GET['opt']=="tambah"){
 				<td width="10">:</td>
 				<td><b><?=$getnik?> / <?=name($getnik)?></b></td>
 				
+				
 			</tr>
 			<tr> 
 				<td height="20">Divisi</td>
@@ -148,7 +149,8 @@ if($_GET['opt']=="tambah"){
 						$point = mysql_fetch_array(mysql_query("SELECT nilai FROM nilai_budaya where nik='".$getnik."' AND tahun='".$getTahun."'"));
 
 						echo"							
-							
+							<input type='hidden' name='nikcek' value='$getnik' size='5'>
+							<input type='hidden' name='tahuncek' value='".$getTahun."'>	
 							<input type='hidden' name='nik[]' value='$getnik' size='5'>
 							<input type='hidden' name='pm[]' value='".$pm['pm']."'>
 							<input type='hidden' name='tahun[]' value='".$getTahun."'>
@@ -159,7 +161,7 @@ if($_GET['opt']=="tambah"){
 								<td align='center'>$no</td>
 								<td><i>$bd[prilaku]</i></td>
 								<td>$bd[ket] <input type='hidden' size='5' name='id_budaya[]' value='$bd[id]'> </td>
-								<td align='center'>2.5</td>
+								<td align='center'>$bd[nilai]</td>
 								<td>
 									<input type='text' size='10' name='nilai[]' value='$point[nilai]'>
 								</td>

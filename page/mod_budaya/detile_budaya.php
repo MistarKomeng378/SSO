@@ -24,43 +24,14 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 			    <div class="panel-body">
 	
 					<?php
-						$query = mysql_query("SELECT * FROM penilaian_kerja where nik='$getNik' AND tahun='$getThnNow'");						
-						$i=1;
-						while($r1=mysql_fetch_array($query)){
-							$pencapaian_2 	= @(($r1['hasil'] / $r1['target'])*100);
-							if($pencapaian_2 > 120){
-								$pencapaian1 = 120;
-							}else{
-								$pencapaian1 = $pencapaian_2;
-							}
-							
-							if($r1['satuan']=="Hr" && $r1['hasil']!==null){
-								if($r1['hasil'] < $r1['target']){
-									$pencapaian1 = 120;
-								}else{
-									$pencapaian1 = @(($r1['target'] / $r1['hasil'])*100);
-								}
-							}
-							
-							if($r1['hasil']<=70){
-								$skor1 =($pencapaian1/70)*4.5;								
-							}elseif($r1['hasil']<=90){
-								$skor1 = 4.5+(($pencapaian1-70)/20)*2;
-							}elseif($r1['hasil']<=100){
-								$skor1 =6.5+(($pencapaian1-90)/10)*2;
-							}elseif($r1['hasil']>100){
-								$skor1 = 8.5+(($pencapaian1-100)/20)*1.5;
-							}
-							
-							$sum_bobot_kar_1		= mysql_fetch_array(mysql_query("SELECT SUM(bobot) as sum_bobot FROM penilaian_kerja where nik='$getNik' AND tahun='$getThnNow'"));	
-							$bot_kar_1			= @(($r1['bobot'] / $sum_bobot_kar_1['sum_bobot'])*75);							
-							$jum_bot1[] 		= $bot_kar_1;	
-							
-							$nilai1				= $bot_kar_1 * $skor1;
-							$jumlah_nilai1[]	= $nilai1;							
-							$i++;
-						}
-						$jumlah_total_nilai1 = array_sum($jumlah_nilai1);
+						$query = mysql_query("SELECT * FROM nilai_budaya");						
+						
+						while($r2=mysql_fetch_array($query)){
+							$dbud2 		= mysql_fetch_array(mysql_query("SELECT * FROM budaya WHERE id='$r2[id_budaya]'"));
+							$jnbud2 		= $dbud2['nilai'] * $r2['nilai'];
+							$tnbud2[] 	= $jnbud2;							
+						}						
+						$total2	 	= array_sum($tnbud2);
 					?>	
 	
 		
@@ -92,7 +63,7 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 			<tr> 
 				<td>Nilai</td>
 				<td>:</td>
-				<td><b><font size="3"><?=desimal_float($jumlah_total_nilai1)?></font></b></td>
+				<td><b><font size="3"><?=desimal_float($total2)?></font></b></td>
 			</tr>
 		</table>
 		<br>
@@ -107,93 +78,35 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 				</thead>
 				<tbody>
 					<?php
-						$query = mysql_query("SELECT * FROM budaya");						
+						$query = mysql_query("SELECT * FROM nilai_budaya");						
 						$i=1;
 						while($r=mysql_fetch_array($query)){
-							
-							// $pencapaian_1 	= ($r['hasil'] / $r['target'])*100;
-							// if($pencapaian_1 > 120){
-							// 	$pencapaian = 120;
-							// }else{
-							// 	$pencapaian = $pencapaian_1;
-							// }
-							
-							// if($r['satuan']=="Hr"){
-							// 	if($r['hasil'] < $r['target']){
-							// 		$pencapaian = 120;
-							// 	}else{
-							// 		$pencapaian = ($r['target'] / $r['hasil'])*100;
-							// 	}
-							// }
-														
-							// if($r['hasil']<=70){
-							// 	$skor = ($pencapaian/70)*4.5;								
-							// }elseif($r['hasil']<=90){
-							// 	$skor = 4.5+(($pencapaian-70)/20)*2;
-							// }elseif($r['hasil']<=100){
-							// 	$skor = 6.5+(($pencapaian-90)/10)*2;
-							// }elseif($r['hasil']>100){
-							// 	$skor = 8.5+(($pencapaian-100)/20)*1.5;
-							// }
-							
-							// $sum_bobot_kar		= mysql_fetch_array(mysql_query("SELECT SUM(bobot) as sum_bobot FROM penilaian_kerja where nik='$getNik' AND tahun='$getThnNow'"));	
-							// $bot_kar			= ($r['bobot'] / $sum_bobot_kar['sum_bobot'])*75;							
-							// $jum_bot2[] 		= $bot_kar;	
-							// $nilai				= $bot_kar * $skor;
-							// $jumlah_nilai[]		= $nilai;
-							
+							$dbud 		= mysql_fetch_array(mysql_query("SELECT * FROM budaya WHERE id='$r[id_budaya]'"));
+							$jnbud 		= $dbud['nilai'] * $r['nilai'];
+							$tnbud[] 	= $jnbud;
 							echo"
 								<tr>
 									<td align='center'>$i</td>
-									<td><i>$r[prilaku]</i></td>
-									<td>$r[ket]</td>
-									<td align='center'>2.5</td>
-                                    <td align='center'></td>
-                                    <td align='center'></td>
+									<td><i>$dbud[prilaku]</i></td>
+									<td>$dbud[ket]</td>
+									<td align='center'>$dbud[nilai]</td>
+                                    <td align='center'>$r[nilai]</td>
+                                    <td align='center'>$jnbud</td>
 									
 								</tr>
 							";
 							$i++;
-						}
-						// $jmlh_bobot = mysql_fetch_array(mysql_query("SELECT SUM(bobot) as jmlh_bobot FROM penilaian_kerja where nik='$getNik'"));
-						// $jumlah_bobot	 	= array_sum($jum_bot2);	
-						// $jumlah_total_nilai = array_sum($jumlah_nilai);
+						}						
+						$total	 	= array_sum($tnbud);	
 					?>	
 								<tr>
 									<td colspan="2" align="right"><b>TOTAL</b></td>
 									<td align="center">&nbsp;</td>
 									<td align="center" colspan="2"><b></b></td>
-									<td align="center">&nbsp;</td>
+									<td align="center"><?=$total?></td>
 								</tr>	
 				</tbody>
 			</table>
-			<!-- <small> Keterangan : <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-					<b>Bobot yang telah diinput dikonversikan secara otomatis menjadi 75</b> </small> -->
-			<!-- <br>
-			<br>
-			<h6><b>Rumus Perhitungam Skor</b></h6>
-			<table border='1' width='100%' align='center')>				
-				<tr>
-					<td align='center'><b>Dibawah Target &nbsp; (P  0% <u><</u> x <u><</u> 70%)</b></td>
-					<td align='center'><b>Mendekati Target &nbsp; (P  70% < x <u><</u> 90%)</b></td>
-					<td align='center'><b>Memenuhi Target &nbsp; (P  90% < x <u><</u> 100%)</b></td>
-					<td align='center'><b>Melebihi Target &nbsp; (P  100% < x <u><</u> 120%)</b></td>
-				</tr>
-				<tbody>
-					<tr>
-						<td align='center'>= (P / 70) x 4,5</td>
-						<td align='center'>= 4,5 + (((P - 70)/20) x 2)</td>
-						<td align='center'>= 6,5 + (((P - 90)/10) x 2)</td>
-						<td align='center'>= 8,5 + (((P - 100)/20) x 1,5)</td>
-					</tr>
-					
-				</tbody>
-			</table>
-				<small> Keterangan : <br>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-					<b>P = Pencapaian / Hasil Kerja (%)</b> </small> -->
-		
 		</div>
 	</div>
 	

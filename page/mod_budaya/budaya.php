@@ -75,6 +75,7 @@
 					<th width="5%">No.</th>
 					<th>Prilaku</th>
 					<th>Keterangan</th>
+					<th>Nilai</th>
 					<th width="10%"></th>
 				</thead>
 				<tbody>
@@ -85,8 +86,9 @@
 							echo"
 								<tr>
 									<td align='center'>$i</td>
-									<td >$r[prilaku]</td>
+									<td>$r[prilaku]</td>
 									<td>$r[ket]</td>
+									<td align='center'>$r[nilai]</td>
 									<td align='center' width='30' >";
 									//=====================
 									if($getEdit==1){

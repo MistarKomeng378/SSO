@@ -92,10 +92,10 @@ $getUnit	= dc($_GET['unit']);
 					</div>
 				</form>
 			</div>
-			
+			<!--
 			<div class='col-lg-2'>
 				<a href='print/print_penilian_kerja_karyawan_result.php?id=".ec($unit['CostCenter'])."-".ec($getTahun)."' target='_blank' class='btn btn-success'><i class='fa fa-print' ></i> Cetak Excel</a> 		
-			</div>
+			</div>-->
 			
 			<table border='0' width='30%' align='right'>
 			<tr >
