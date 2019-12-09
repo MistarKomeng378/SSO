@@ -88,7 +88,7 @@
 									<td align='center'>$i</td>
 									<td>$r[prilaku]</td>
 									<td>$r[ket]</td>
-									<td align='center'>$r[nilai]</td>
+									<td align='center'>$r[bobot]</td>
 									<td align='center' width='30' >";
 									//=====================
 									if($getEdit==1){

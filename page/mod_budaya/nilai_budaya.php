@@ -24,7 +24,7 @@
 $unit = mysql_fetch_array(mysql_query("SELECT * FROM mskko WHERE CostCenter='".mysql_real_escape_string(dc($_GET['unit']))."'"));
 $getUnit	= dc($_GET['unit']);
 ?>	
-		<h1 class="page-header"> Nilai Budaya Karyawan 
+		<h1 class="page-header"> Penilaian Prilaku (Budaya Kerja) 
 				<small><?=$_SESSION['nm_level']?></small>
 			</h1>
 			
@@ -33,7 +33,7 @@ $getUnit	= dc($_GET['unit']);
 			        <div class="panel-heading-btn">
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 					</div>
-			        <h4 class="panel-title">Nilai Budaya Karyawan <?=$getTahun?></h4>
+			        <h4 class="panel-title"> Penilaian Prilaku (Budaya Kerja) Karyawan <?=$getTahun?></h4>
 			    </div>
 			    <div class="panel-body">
 			
@@ -92,10 +92,10 @@ $getUnit	= dc($_GET['unit']);
 					</div>
 				</form>
 			</div>
-			<!--
+			
 			<div class='col-lg-2'>
-				<a href='print/print_penilian_kerja_karyawan_result.php?id=".ec($unit['CostCenter'])."-".ec($getTahun)."' target='_blank' class='btn btn-success'><i class='fa fa-print' ></i> Cetak Excel</a> 		
-			</div>-->
+				<a href='print/print_penilaian_prilaku_budaya.php?id=".ec($unit['CostCenter'])."-".ec($getTahun)."' target='_blank' class='btn btn-success'><i class='fa fa-print' ></i> Cetak Excel</a> 		
+			</div>
 			
 			<table border='0' width='30%' align='right'>
 			<tr >
@@ -221,13 +221,17 @@ $getUnit	= dc($_GET['unit']);
 									<td>$divisi</td>
 									<td align='center' width='30' >";
 									//=====================
-									if($getEdit==1){										
+									if($getEdit==1){
+										if($sumhasil['jum_hasil']==0){
+											echo"<span title='Penilaian Kerja Belum diinput' class='btn-xs btn-danger btn-flat' ><i class='fa fa-times'></i></span>";	
+										}else{										
 											echo"<a href='?page=fn_budaya&opt=edit&nik=".ec($r['nik'])."&tahun=".ec($getTahun)."&CostCenter=".ec($div)."' class='btn btn-xs btn-primary' title='Input Budaya'><i class='fa fa-pencil'></i></a> ";										
+										}
 									echo"
 									</td> 
 									<td align='center' width='30'>";										
 										if($sumhasil['jum_hasil']==0){
-											echo"<span title='Budaya Belum diinput' class='btn-xs btn-danger btn-flat' ><i class='fa fa-times'></i></span>";	
+											echo"<span title='Penilaian Kerja Belum diinput' class='btn-xs btn-danger btn-flat' ><i class='fa fa-times'></i></span>";	
 										}else{
 											echo"
 											<div class='stats-link'>
@@ -269,7 +273,7 @@ $getUnit	= dc($_GET['unit']);
 		<div class="modal-content-full">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
-				<h4 class="modal-title" align="center"><b>REPORT <br>PENILAIAN BUDAYA KARYAWAN</b></h4>
+				<h4 class="modal-title" align="center"><b>REPORT <br>PENILAIAN PRILAKU (BUDAYA KERJA) KARYAWAN</b></h4>
 				
 				<h5 align="center"><b> Periode: Januari - Desember  Tahun <?=$getTahun; ?></b> </h5>
 			</div>

@@ -17,7 +17,7 @@ if($_GET['opt']=="tambah"){
 	$id_baru		= $edit['id'];
 	$prilaku		= $edit['prilaku'];
 	$ket	        = $edit['ket'];
-	$nilai			= $edit['nilai'];
+	$bobot			= $edit['bobot'];
     
 }
 ?>
@@ -48,8 +48,8 @@ if($_GET['opt']=="tambah"){
 						</div>
 						<div class="col-lg-12">
 								<label for="aktifitas">Bobot</label>
-								<input type="text"name="nilai" class="form-control" value="<?=$nilai?>" required id="nilai">
-								<!-- <small>default Nilai diisikan dengan angka 2.5</small> -->
+								<input type="text"name="bobot" class="form-control" value="<?=$bobot?>" required id="bobot">
+								<small>Desimal angka menggunakan . (Titik)</small>
 						</div>
 					</div>
 					<hr/>

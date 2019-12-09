@@ -28,7 +28,7 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 						$tnbud2		= 0;
 						while($r2=mysql_fetch_array($query)){
 							$dbud2 			= mysql_fetch_array(mysql_query("SELECT * FROM budaya WHERE id='$r2[id_budaya]'"));
-							$jnbud2 		= $dbud2['nilai'] * $r2['nilai'];
+							$jnbud2 		= $dbud2['bobot'] * $r2['nilai'];
 							$tnbud2 		+= $jnbud2;						
 						}						
 						$total2	 			=$tnbud2;
@@ -44,7 +44,7 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 					<?php
 						// echo" <a href='print/print_penilaian_kerja.php?nik=".ec($getNik)."' target='_blank' class='btn btn-primary'><i class='fa fa-print'></i> Cetak</a>";
 						
-						echo" <a href='print/print_penilaian_kerja.php?nik=".ec($getNik)."&CostCenter=".ec($getCc)."&tahun=".ec($getThnNow)."' target='_blank' class='btn btn-primary'><i class='fa fa-print'></i> Cetak</a>";
+						echo" <a href='print/print_penilaian_prilaku.php?nik=".ec($getNik)."&CostCenter=".ec($getCc)."&tahun=".ec($getThnNow)."' target='_blank' class='btn btn-primary'><i class='fa fa-print'></i> Cetak</a>";
 						
 						
 					?> &nbsp;&nbsp;
@@ -83,14 +83,14 @@ $div= mysql_fetch_array(mysql_query("select * from mskko where CostCenter='".$ge
 						$tnbud		= 0;
 						while($r=mysql_fetch_array($query)){
 							$dbud 		= mysql_fetch_array(mysql_query("SELECT * FROM budaya WHERE id='$r[id_budaya]'"));
-							$jnbud 		= $dbud['nilai'] * $r['nilai'];
+							$jnbud 		= $dbud['bobot'] * $r['nilai'];
 							$tnbud 		+= $jnbud;
 							echo"
 								<tr>
 									<td align='center'>$i</td>
 									<td><i>$dbud[prilaku]</i></td>
 									<td>$dbud[ket]</td>
-									<td align='center'>$dbud[nilai]</td>
+									<td align='center'>$dbud[bobot]</td>
                                     <td align='center'>$r[nilai]</td>
                                     <td align='center'>$jnbud</td>
 									

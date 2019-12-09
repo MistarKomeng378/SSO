@@ -48,7 +48,7 @@ if($_GET['opt']=="tambah"){
 
 
 ?>	
-		<h1 class="page-header"> Nilai Budaya Karyawan
+		<h1 class="page-header"> Penilaian Prilaku (Budaya Kerja)
 				<small><?=$_SESSION['nm_level']?></small>
 			</h1>
 			
@@ -57,7 +57,7 @@ if($_GET['opt']=="tambah"){
 			        <div class="panel-heading-btn">
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
 					</div>
-			        <h4 class="panel-title">Nilai Budaya Karyawan Tahun <?=$getTahun?></h4>
+			        <h4 class="panel-title">Penilaian Prilaku (Budaya Kerja) Karyawan Tahun <?=$getTahun?></h4>
 			    </div>
 			    <div class="panel-body">
 			
